@@ -88,7 +88,7 @@ class NodeTypeSearchCommandController extends CommandController
         $uris = [];
 
         foreach ($documentNodes as $documentNode) {
-            $uri = '';
+            $uri = '/';
             /** @var NodeInterface|TraversableNodeInterface $documentNode */
             if ($documentNode->findNodePath()->getDepth() > 2) {
                 $breadcrumbQuery = new FlowQuery([$documentNode]);
