@@ -32,7 +32,10 @@ class NodeTypeSearchCommandController extends CommandController
      * Find URIs by nodeType
      *
      * @param string $nodeType The searched nodeType (like TBW.Site:Content.Code)
-     * @param string $siteNodePath
+     * @param string $siteNodePath The node path to start at. Defaults to /sites
+     * @param string $domain The domain to prepend to the URIs. Helps getting better output.
+     * @param bool $includeHidden Include hidden nodes in the result. URLs with hidden nodes will be prefixed with a red dot.
+     * @param string|null $language The language to search in. Defaults to the default language.
      *
      * @return void
      */
@@ -56,8 +59,11 @@ class NodeTypeSearchCommandController extends CommandController
     /**
      * Find URIs by flowQueryFilter
      *
-     * @param string $flowQueryFilter
-     * @param string $siteNodePath
+     * @param string $flowQueryFilter The flow query filter to use. If it does not start with [instanceof ...], it will be prepended by [instanceof Neos.Neos:Content].
+     * @param string $siteNodePath The node path to start at. Defaults to /sites
+     * @param string $domain The domain to prepend to the URIs. Helps getting better output.
+     * @param bool $includeHidden Include hidden nodes in the result. URLs with hidden nodes will be prefixed with a red dot.
+     * @param string|null $language The language to search in. Defaults to the default language.
      *
      * @return void
      */
