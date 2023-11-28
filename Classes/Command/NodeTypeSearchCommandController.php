@@ -40,9 +40,16 @@ class NodeTypeSearchCommandController extends CommandController
         string $nodeType,
         string $siteNodePath = '/sites',
         string $domain = '',
-        bool $includeHidden = false
+        bool $includeHidden = false,
+        ?string $language = null
     ): void {
-        $this->findUrisByFlowQueryFilterCommand('[instanceof ' . $nodeType . ']', $siteNodePath, $domain, $includeHidden);
+        $this->findUrisByFlowQueryFilterCommand(
+            '[instanceof ' . $nodeType . ']',
+            $siteNodePath,
+            $domain,
+            $includeHidden,
+            $language
+        );
     }
 
 
@@ -58,14 +65,20 @@ class NodeTypeSearchCommandController extends CommandController
         string $flowQueryFilter,
         string $siteNodePath = '/sites',
         string $domain = '',
-        bool $includeHidden = false
+        bool $includeHidden = false,
+        ?string $language = null
     ): void {
-        $context = $this->contextFactory->create([
+        $contextParams = [
             'invisibleContentShown' => $includeHidden,
             'inaccessibleContentShown' => $includeHidden,
-            // 'dimensions' => ['language' => [$language]],
-            // 'targetDimensions' => ['language' => $language],
-        ]);
+        ];
+
+        if ($language !== null) {
+            $contextParams['dimensions'] = ['language' => [$language]];
+            $contextParams['targetDimensions'] = ['language' => $language];
+        }
+
+        $context = $this->contextFactory->create($contextParams);
         $siteNode = $context->getNode($siteNodePath);
 
         if (preg_match('/\[\!?instanceof /', $flowQueryFilter) === 0) {
